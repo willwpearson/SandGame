@@ -167,14 +167,14 @@ public class SandLab
 		  }
 		  else
 		  {
-			  if(randomRow + 1 == grid.length - 1 || bouncedOff == true)
+			  if(randomRow + 1 == grid.length - 1)
 			  {
 				  bouncedOff = true;
-				  if(randomRow - 1 == EMPTY)
-				  {
-					  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
-					  grid[randomRow][randomCol] = 0;
-				  } 
+			  }
+			  if(randomRow - 1 == EMPTY && bouncedOff == true)
+			  {
+				  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
+				  grid[randomRow][randomCol] = 0;
 			  }
 			  else
 			  {
