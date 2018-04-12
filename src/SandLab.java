@@ -9,6 +9,7 @@ public class SandLab
   public static final int METAL = 1;
   public static final int SAND = 2;
   public static final int WATER = 3;
+  public static final int HELIUM = 4;
   
   //do not add any more fields below
   private int[][] grid;
@@ -25,12 +26,13 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[4];
+    names = new String[5];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
+    names[HELIUM] = "Helium";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -55,21 +57,25 @@ public class SandLab
 	  {
 		  for(int col = 0; col < grid[0].length; col++)
 		  {
-			  if(grid[row][col] == 0)
+			  if(grid[row][col] == EMPTY)
 			  {
 				  color = Color.BLACK;
 			  }
-			  else if(grid[row][col] == 1)
+			  else if(grid[row][col] == METAL)
 			  {
 				  color = Color.GRAY;
 			  }
-			  else if(grid[row][col] == 2)
+			  else if(grid[row][col] == SAND)
 			  {
 				  color = Color.YELLOW;
 			  }
-			  else if(grid[row][col] == 3)
+			  else if(grid[row][col] == WATER)
 			  {
 				  color = Color.BLUE;
+			  }
+			  else if(grid[row][col] == HELIUM)
+			  {
+				  color = Color.WHITE;
 			  }
 			  display.setColor(row, col, color);
 		  }
@@ -90,25 +96,53 @@ public class SandLab
 	  int randomCol = (int)(Math.random() * grid[0].length - 1);
 	  int randomDirection = (int)(Math.random() * 3);
 	  
-	  if(grid[randomRow][randomCol] == 2 && grid[randomRow + 1][randomCol] != 2)
+	  if(grid[randomRow][randomCol] == SAND && (grid[randomRow + 1][randomCol] == EMPTY || grid[randomRow + 1][randomCol] == WATER))
 	  {
-		  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
-		  grid[randomRow][randomCol] = 0;
-	  }
-	  
-	  if(grid[randomRow][randomCol] == 3)
-	  {
-		  if(randomDirection == 1)
+		  if(grid[randomRow + 1][randomCol] == WATER)
+		  {
+			  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = WATER;
+		  }
+		  else
 		  {
 			  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
 			  grid[randomRow][randomCol] = 0;
 		  }
-		  else if(randomDirection == 2 && randomCol - 1 >= 0)
+
+	  }
+	  
+	  if(grid[randomRow][randomCol] == WATER && randomCol - 1 >= 0)
+	  {
+		  if(randomDirection == 1 && grid[randomRow + 1][randomCol] == EMPTY)
+		  {
+			  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else if(randomDirection == 2 && grid[randomRow][randomCol - 1] == EMPTY)
 		  {
 			  grid[randomRow][randomCol - 1] = grid[randomRow][randomCol];
 			  grid[randomRow][randomCol] = 0;
 		  }
-		  else
+		  else if(grid[randomRow][randomCol + 1] == EMPTY)
+		  {
+			  grid[randomRow][randomCol + 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+	  }
+	  
+	  if(grid[randomRow][randomCol] == HELIUM && randomCol - 1 >= 0 && randomRow - 1 >= 0)
+	  {
+		  if(randomDirection == 1 && grid[randomRow - 1][randomCol] == EMPTY)
+		  {
+			  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else if(randomDirection == 2 && grid[randomRow][randomCol - 1] == EMPTY)
+		  {
+			  grid[randomRow][randomCol - 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else if(grid[randomRow][randomCol + 1] == EMPTY)
 		  {
 			  grid[randomRow][randomCol + 1] = grid[randomRow][randomCol];
 			  grid[randomRow][randomCol] = 0;
