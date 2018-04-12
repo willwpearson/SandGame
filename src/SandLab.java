@@ -7,6 +7,8 @@ public class SandLab
   //add constants for particle types here
   public static final int EMPTY = 0;
   public static final int METAL = 1;
+  public static final int SAND = 2;
+  public static final int WATER = 3;
   
   //do not add any more fields below
   private int[][] grid;
@@ -23,13 +25,15 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[2];
+    names = new String[4];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
+    names[SAND] = "Sand";
+    names[WATER] = "Water";
     
     //1. Add code to initialize the data member grid with same dimensions
-    
+    grid = new int[numRows][numCols];
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
   }
@@ -38,15 +42,39 @@ public class SandLab
   private void locationClicked(int row, int col, int tool)
   {
     //2. Assign the values associated with the parameters to the grid
-   
+	  grid[row][col] = tool;
   }
 
   //copies each element of grid into the display
   public void updateDisplay()
   {
       //Step 3
+	  Color color = null;
    //Hint - use a nested for loop
-    
+	  for(int row = 0; row < grid.length; row++)
+	  {
+		  for(int col = 0; col < grid[0].length; col++)
+		  {
+			  if(grid[row][col] == 0)
+			  {
+				  color = Color.BLACK;
+			  }
+			  else if(grid[row][col] == 1)
+			  {
+				  color = Color.GRAY;
+			  }
+			  else if(grid[row][col] == 2)
+			  {
+				  color = Color.YELLOW;
+			  }
+			  else if(grid[row][col] == 3)
+			  {
+				  color = Color.BLUE;
+			  }
+			  display.setColor(row, col, color);
+		  }
+	  }
+	  
   }
 
   //Step 5,7
@@ -58,8 +86,34 @@ public class SandLab
     //The scalar refers to how big the value could be
     //int someRandom = (int) (Math.random() * scalar)
     //remember that you need to watch for the edges of the array
-    
-    
+	  int randomRow = (int)(Math.random() * grid.length - 1);
+	  int randomCol = (int)(Math.random() * grid[0].length - 1);
+	  int randomDirection = (int)(Math.random() * 3);
+	  
+	  if(grid[randomRow][randomCol] == 2 && grid[randomRow + 1][randomCol] != 2)
+	  {
+		  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+		  grid[randomRow][randomCol] = 0;
+	  }
+	  
+	  if(grid[randomRow][randomCol] == 3)
+	  {
+		  if(randomDirection == 1)
+		  {
+			  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else if(randomDirection == 2 && randomCol - 1 >= 0)
+		  {
+			  grid[randomRow][randomCol - 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else
+		  {
+			  grid[randomRow][randomCol + 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = 0;
+		  }
+	  }
   }
   
   //do not modify this method!
