@@ -10,6 +10,7 @@ public class SandLab
   public static final int SAND = 2;
   public static final int WATER = 3;
   public static final int HELIUM = 4;
+  public static final int BOUNCE = 5;
   
   //do not add any more fields below
   private int[][] grid;
@@ -26,13 +27,14 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[5];
+    names = new String[6];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
     names[HELIUM] = "Helium";
+    names[BOUNCE] = "Bounce";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -77,6 +79,10 @@ public class SandLab
 			  {
 				  color = Color.WHITE;
 			  }
+			  else if(grid[row][col] == BOUNCE)
+			  {
+				  color = Color.PINK;
+			  }
 			  display.setColor(row, col, color);
 		  }
 	  }
@@ -96,6 +102,7 @@ public class SandLab
 	  int randomCol = (int)(Math.random() * grid[0].length - 1);
 	  int randomDirection = (int)(Math.random() * 3);
 	  
+	  //Sand
 	  if(grid[randomRow][randomCol] == SAND && (grid[randomRow + 1][randomCol] == EMPTY || grid[randomRow + 1][randomCol] == WATER))
 	  {
 		  if(grid[randomRow + 1][randomCol] == WATER)
@@ -110,7 +117,7 @@ public class SandLab
 		  }
 
 	  }
-	  
+	  //Water
 	  if(grid[randomRow][randomCol] == WATER && randomCol - 1 >= 0)
 	  {
 		  if(randomDirection == 1 && grid[randomRow + 1][randomCol] == EMPTY)
@@ -129,7 +136,7 @@ public class SandLab
 			  grid[randomRow][randomCol] = 0;
 		  }
 	  }
-	  
+	  //Helium
 	  if(grid[randomRow][randomCol] == HELIUM && randomCol - 1 >= 0 && randomRow - 1 >= 0)
 	  {
 		  if(randomDirection == 1 && grid[randomRow - 1][randomCol] == EMPTY)
@@ -147,6 +154,35 @@ public class SandLab
 			  grid[randomRow][randomCol + 1] = grid[randomRow][randomCol];
 			  grid[randomRow][randomCol] = 0;
 		  }
+	  }
+	  
+	  //Bounce
+	  if(grid[randomRow][randomCol] == BOUNCE && grid[randomRow + 1][randomCol] == EMPTY)
+	  {
+		  boolean bouncedOff = false;
+		  
+		  if(grid[randomRow + 1][randomCol] == WATER)
+		  {
+			  grid[randomRow][randomCol] = BOUNCE;
+		  }
+		  else
+		  {
+			  if(randomRow + 1 == grid.length - 1 || bouncedOff == true)
+			  {
+				  bouncedOff = true;
+				  if(randomRow - 1 == EMPTY)
+				  {
+					  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
+					  grid[randomRow][randomCol] = 0;
+				  } 
+			  }
+			  else
+			  {
+				  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+				  grid[randomRow][randomCol] = 0;
+			  }
+		  }
+
 	  }
   }
   
