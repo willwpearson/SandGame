@@ -14,6 +14,7 @@ public class SandLab
   
   //do not add any more fields below
   private int[][] grid;
+  private boolean hitEdge;
   private SandDisplay display;
   
   
@@ -38,6 +39,7 @@ public class SandLab
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
+    hitEdge = false;
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
   }
@@ -139,7 +141,12 @@ public class SandLab
 	  //Helium
 	  if(grid[randomRow][randomCol] == HELIUM && randomCol - 1 >= 0 && randomRow - 1 >= 0)
 	  {
-		  if(randomDirection == 1 && grid[randomRow - 1][randomCol] == EMPTY)
+		  if(grid[randomRow - 1][randomCol] == WATER)
+		  {
+			  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol] = WATER;
+		  }
+		  else if(randomDirection == 1 && grid[randomRow - 1][randomCol] == EMPTY)
 		  {
 			  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
 			  grid[randomRow][randomCol] = 0;
@@ -157,32 +164,27 @@ public class SandLab
 	  }
 	  
 	  //Bounce
-	  if(grid[randomRow][randomCol] == BOUNCE && grid[randomRow + 1][randomCol] == EMPTY)
-	  {
-		  boolean bouncedOff = false;
-		  
-		  if(grid[randomRow + 1][randomCol] == WATER)
+	  if(grid[randomRow][randomCol] == BOUNCE)
+	  {  	
+		  if(randomRow + 1 >= grid[0].length - 1 || randomRow + 1 == METAL)
 		  {
-			  grid[randomRow][randomCol] = BOUNCE;
+			  hitEdge = true;
+		  }
+		  else if(randomRow - 1 < 0 || randomRow - 1 == METAL)
+		  {
+			  hitEdge = false;
+		  }
+		  
+		  if(hitEdge == true)
+		  {
+			  grid[randomRow - 1][randomCol] = BOUNCE;
+			  grid[randomRow][randomCol] = 0;
 		  }
 		  else
 		  {
-			  if(randomRow + 1 == grid.length - 1)
-			  {
-				  bouncedOff = true;
-			  }
-			  if(randomRow - 1 == EMPTY && bouncedOff == true)
-			  {
-				  grid[randomRow - 1][randomCol] = grid[randomRow][randomCol];
-				  grid[randomRow][randomCol] = 0;
-			  }
-			  else
-			  {
-				  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
-				  grid[randomRow][randomCol] = 0;
-			  }
+			 grid[randomRow + 1][randomCol] = BOUNCE;
+			 grid[randomRow][randomCol] = 0;
 		  }
-
 	  }
   }
   
