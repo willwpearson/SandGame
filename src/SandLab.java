@@ -11,10 +11,11 @@ public class SandLab
   public static final int WATER = 3;
   public static final int HELIUM = 4;
   public static final int BOUNCE = 5;
+  public static final int VIRUS = 6;
   
   //do not add any more fields below
   private int[][] grid;
-  private boolean hitEdge;
+  private boolean[] hitEdge;
   private SandDisplay display;
   
   
@@ -28,7 +29,7 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[6];
+    names = new String[7];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
@@ -36,10 +37,11 @@ public class SandLab
     names[WATER] = "Water";
     names[HELIUM] = "Helium";
     names[BOUNCE] = "Bounce";
+    names[VIRUS] = "Virus";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
-    hitEdge = false;
+    hitEdge = new boolean[numCols];
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
   }
@@ -84,6 +86,10 @@ public class SandLab
 			  else if(grid[row][col] == BOUNCE)
 			  {
 				  color = Color.PINK;
+			  }
+			  else if(grid[row][col] == VIRUS)
+			  {
+				  color = Color.MAGENTA;
 			  }
 			  display.setColor(row, col, color);
 		  }
@@ -168,14 +174,14 @@ public class SandLab
 	  {  	
 		  if(randomRow + 1 >= grid[0].length - 1 || randomRow + 1 == METAL)
 		  {
-			  hitEdge = true;
+			  hitEdge[randomCol] = true;
 		  }
 		  else if(randomRow - 1 < 0 || randomRow - 1 == METAL)
 		  {
-			  hitEdge = false;
+			  hitEdge[randomCol] = false;
 		  }
 		  
-		  if(hitEdge == true)
+		  if(hitEdge[randomCol] == true)
 		  {
 			  grid[randomRow - 1][randomCol] = BOUNCE;
 			  grid[randomRow][randomCol] = 0;
@@ -184,6 +190,54 @@ public class SandLab
 		  {
 			 grid[randomRow + 1][randomCol] = BOUNCE;
 			 grid[randomRow][randomCol] = 0;
+		  }
+	  }
+	  
+	  //Virus
+	  if(grid[randomRow][randomCol] == VIRUS)
+	  {
+		  if(grid[randomRow + 1][randomCol] == EMPTY)
+		  {
+			  grid[randomRow + 1][randomCol] = VIRUS;
+			  grid[randomRow][randomCol] = 0;
+		  }
+		  else
+		  {
+			  int temp = grid[randomRow + 1][randomCol];
+			  //VIRUS takeover
+			  if(grid[randomRow - 1][randomCol] != EMPTY)
+			  {
+				  grid[randomRow - 1][randomCol] = VIRUS;
+			  }
+			  if(grid[randomRow + 1][randomCol] != EMPTY)
+			  {
+				  grid[randomRow + 1][randomCol] = VIRUS;
+			  }
+			  if(grid[randomRow][randomCol - 1] != EMPTY)
+			  {
+				  grid[randomRow][randomCol - 1] = VIRUS;
+			  }
+			  if(grid[randomRow][randomCol + 1] != EMPTY)
+			  {
+				  grid[randomRow][randomCol + 1] = VIRUS;
+			  }
+			  //TEMP takeover
+			  if(grid[randomRow - 1][randomCol] != EMPTY)
+			  {
+				  grid[randomRow - 1][randomCol] = temp;
+			  }
+			  if(grid[randomRow + 1][randomCol] != EMPTY)
+			  {
+				  grid[randomRow + 1][randomCol] = temp;
+			  }
+			  if(grid[randomRow][randomCol - 1] != EMPTY)
+			  {
+				  grid[randomRow][randomCol - 1] = temp;
+			  }
+			  if(grid[randomRow][randomCol + 1] != EMPTY)
+			  {
+				  grid[randomRow][randomCol + 1] = temp;
+			  }
 		  }
 	  }
   }
