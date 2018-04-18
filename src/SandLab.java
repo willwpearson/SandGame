@@ -201,8 +201,7 @@ public class SandLab
 			  grid[randomRow + 1][randomCol] = VIRUS;
 			  grid[randomRow][randomCol] = 0;
 		  }
-		  else
-		  {
+		  
 			  int temp = grid[randomRow + 1][randomCol];
 			  //VIRUS takeover
 			  if(grid[randomRow - 1][randomCol] != EMPTY)
@@ -222,23 +221,23 @@ public class SandLab
 				  grid[randomRow][randomCol + 1] = VIRUS;
 			  }
 			  //TEMP takeover
-			  if(grid[randomRow - 1][randomCol] != EMPTY)
-			  {
-				  grid[randomRow - 1][randomCol] = temp;
-			  }
-			  if(grid[randomRow + 1][randomCol] != EMPTY)
-			  {
-				  grid[randomRow + 1][randomCol] = temp;
-			  }
-			  if(grid[randomRow][randomCol - 1] != EMPTY)
-			  {
-				  grid[randomRow][randomCol - 1] = temp;
-			  }
-			  if(grid[randomRow][randomCol + 1] != EMPTY)
-			  {
-				  grid[randomRow][randomCol + 1] = temp;
-			  }
-		  }
+//			  if(grid[randomRow - 1][randomCol] != EMPTY)
+//			  {
+//				  grid[randomRow - 1][randomCol] = temp;
+//			  }
+//			  if(grid[randomRow + 1][randomCol] != EMPTY)
+//			  {
+//				  grid[randomRow + 1][randomCol] = temp;
+//			  }
+//			  if(grid[randomRow][randomCol - 1] != EMPTY)
+//			  {
+//				  grid[randomRow][randomCol - 1] = temp;
+//			  }
+//			  if(grid[randomRow][randomCol + 1] != EMPTY)
+//			  {
+//				  grid[randomRow][randomCol + 1] = temp;
+//			  }
+		  
 	  }
   }
   
