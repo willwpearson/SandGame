@@ -13,7 +13,7 @@ public class SandLab
   public static final int BOUNCE = 5;
   public static final int VIRUS = 6;
   public static final int FIRE = 7;
-  public static final int 
+  public static final int VINE = 8;
   
   //do not add any more fields below
   private int[][] grid;
@@ -31,7 +31,7 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[8];
+    names = new String[9];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
@@ -41,6 +41,7 @@ public class SandLab
     names[BOUNCE] = "Bounce";
     names[VIRUS] = "Virus";
     names[FIRE] = "Fire";
+    names[VINE] = "Vine";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -97,6 +98,10 @@ public class SandLab
 			  else if(grid[row][col] == FIRE)
 			  {
 				  color = Color.CYAN;
+			  }
+			  else if(grid[row][col] == VINE)
+			  {
+				  color = Color.GREEN;
 			  }
 			  display.setColor(row, col, color);
 		  }
@@ -270,6 +275,12 @@ public class SandLab
 			  grid[randomRow - 1][randomCol + 1] = FIRE;
 			  grid[randomRow][randomCol] = EMPTY;
 		  }
+	  }
+	  
+	  //Vine
+	  if(grid[randomRow][randomCol] == VINE && randomCol - 1 >= 0 && randomRow - 1 >= 0)
+	  {
+		  
 	  }
   }
   
