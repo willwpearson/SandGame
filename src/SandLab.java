@@ -14,6 +14,7 @@ public class SandLab
   public static final int VIRUS = 6;
   public static final int FIRE = 7;
   public static final int VINE = 8;
+  public static final int TELEPORT = 9;
   
   //do not add any more fields below
   private int[][] grid;
@@ -31,7 +32,7 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[9];
+    names = new String[10];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
@@ -42,6 +43,7 @@ public class SandLab
     names[VIRUS] = "Virus";
     names[FIRE] = "Fire";
     names[VINE] = "Vine";
+    names[TELEPORT] = "Teleport";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -103,6 +105,10 @@ public class SandLab
 			  {
 				  color = new Color(45, 102, 25);
 			  }
+			  else if(grid[row][col] == TELEPORT)
+			  {
+				  color = new Color(255, 255, 0);
+			  }
 			  display.setColor(row, col, color);
 		  }
 	  }
@@ -113,7 +119,7 @@ public class SandLab
   //called repeatedly.
   //causes one random particle in grid to maybe do something.
   public void step()
-  {
+  {  
     //Remember, you need to access both row and column to specify a spot in the array
     //The scalar refers to how big the value could be
     //int someRandom = (int) (Math.random() * scalar)
@@ -256,13 +262,8 @@ public class SandLab
 	  
 	  //Fire
 	  if(grid[randomRow][randomCol] == FIRE && randomCol - 1 >= 0 && randomRow - 1 >= 0)
-	  {
-		  if(randomDirectionFire == 0)
-		  {
-			  grid[randomRow - 1][randomCol] = FIRE;
-			  grid[randomRow][randomCol] = EMPTY;
-		  }
-		  else if(randomDirectionFire == 1)
+	  {  
+		  if(randomDirectionFire == 1)
 		  {
 			  grid[randomRow][randomCol] = EMPTY;
 		  }
@@ -276,6 +277,24 @@ public class SandLab
 			  grid[randomRow - 1][randomCol + 1] = FIRE;
 			  grid[randomRow][randomCol] = EMPTY;
 		  }
+		  
+		  //Fire Eats Vine
+		  if(grid[randomRow - 1][randomCol] == VINE)
+		  {
+			  grid[randomRow - 1][randomCol] = FIRE;
+		  }
+		  if(grid[randomRow + 1][randomCol] == VINE)
+		  {
+			  grid[randomRow + 1][randomCol] = FIRE;
+		  }
+		  if(grid[randomRow][randomCol - 1] == VINE)
+		  {
+			  grid[randomRow][randomCol - 1] = FIRE;
+		  }
+		  if(grid[randomRow][randomCol + 1] == VINE)
+		  {
+			  grid[randomRow][randomCol + 1] = FIRE;
+		  }
 	  }
 	  
 	  //Vine
@@ -288,6 +307,21 @@ public class SandLab
 				  grid[randomRow + 1][randomCol] = VINE;
 			  }
 		  }
+		  else if(grid[randomRow + 1][randomCol] == WATER)
+		  {
+			  if(randomSpread >= 90)
+			  {
+				  grid[randomRow + 1][randomCol] = VINE;
+				  grid[randomRow][randomCol + 1] = VINE;
+				  grid[randomRow][randomCol - 1] = VINE;
+			  }
+		  }
+	  }
+	  
+	  //Teleport
+	  if(grid[randomRow][randomCol] == VINE && randomCol - 1 >= 0 && randomRow - 1 >= 0)
+	  {
+		  
 	  }
   }
   
