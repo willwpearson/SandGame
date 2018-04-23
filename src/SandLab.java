@@ -122,6 +122,7 @@ public class SandLab
 	  int randomCol = (int)(Math.random() * grid[0].length - 1);
 	  int randomDirection = (int)(Math.random() * 3);
 	  int randomDirectionFire = (int)(Math.random() * 4);
+	  int randomSpread = (int)(Math.random() * 100);
 	  
 	  //Sand
 	  if(grid[randomRow][randomCol] == SAND && (grid[randomRow + 1][randomCol] == EMPTY || grid[randomRow + 1][randomCol] == WATER))
@@ -280,7 +281,13 @@ public class SandLab
 	  //Vine
 	  if(grid[randomRow][randomCol] == VINE && randomCol - 1 >= 0 && randomRow - 1 >= 0)
 	  {
-		  
+		  if(grid[randomRow + 1][randomCol] == EMPTY)
+		  {  
+			  if(randomSpread == 1)
+			  {
+				  grid[randomRow + 1][randomCol] = VINE;
+			  }
+		  }
 	  }
   }
   
