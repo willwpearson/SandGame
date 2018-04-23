@@ -77,11 +77,11 @@ public class SandLab
 			  }
 			  else if(grid[row][col] == SAND)
 			  {
-				  color = Color.YELLOW;
+				  color = new Color(204, 186, 25);
 			  }
 			  else if(grid[row][col] == WATER)
 			  {
-				  color = Color.BLUE;
+				  color = new Color(7, 125, 116);
 			  }
 			  else if(grid[row][col] == HELIUM)
 			  {
@@ -89,19 +89,19 @@ public class SandLab
 			  }
 			  else if(grid[row][col] == BOUNCE)
 			  {
-				  color = Color.PINK;
+				  color = new Color(255, 0, 200);
 			  }
 			  else if(grid[row][col] == VIRUS)
 			  {
-				  color = Color.MAGENTA;
+				  color = new Color(153, 51, 204);
 			  }
 			  else if(grid[row][col] == FIRE)
 			  {
-				  color = Color.CYAN;
+				  color = new Color(229, 64, 0);
 			  }
 			  else if(grid[row][col] == VINE)
 			  {
-				  color = Color.GREEN;
+				  color = new Color(45, 102, 25);
 			  }
 			  display.setColor(row, col, color);
 		  }
