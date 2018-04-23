@@ -297,6 +297,41 @@ public class SandLab
 		  {
 			  grid[randomRow][randomCol + 1] = FIRE;
 		  }
+		  
+		  //Fire Blows Up Helium
+		  if(grid[randomRow - 1][randomCol] == HELIUM && randomRow - 2 >= 0 && randomCol - 2 >= 0 && randomRow + 2 < grid[0].length && randomCol + 2 < grid.length)
+		  {
+			  //Explosion
+			  grid[randomRow - 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol + 2] = FIRE;
+			  grid[randomRow + 2][randomCol - 2] = FIRE;
+			  grid[randomRow - 2][randomCol + 2] = FIRE;
+			  grid[randomRow - 2][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol + 2] = FIRE;
+			  //Clear Explosion
+			  grid[randomRow - 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol + 1] = EMPTY;
+			  grid[randomRow + 1][randomCol - 1] = EMPTY;
+			  grid[randomRow - 1][randomCol + 1] = EMPTY;
+			  grid[randomRow - 1][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol + 1] = EMPTY;
+		  }
+		  if(grid[randomRow + 1][randomCol] == HELIUM)
+		  {
+			  grid[randomRow + 1][randomCol] = FIRE;
+		  }
+		  if(grid[randomRow][randomCol - 1] == HELIUM)
+		  {
+			  grid[randomRow][randomCol - 1] = FIRE;
+		  }
+		  if(grid[randomRow][randomCol + 1] == HELIUM)
+		  {
+			  grid[randomRow][randomCol + 1] = FIRE;
+		  }
 	  }
 	  
 	  //Vine
