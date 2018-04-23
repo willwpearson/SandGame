@@ -129,6 +129,8 @@ public class SandLab
 	  int randomDirection = (int)(Math.random() * 3);
 	  int randomDirectionFire = (int)(Math.random() * 4);
 	  int randomSpread = (int)(Math.random() * 100);
+	  int randomTelRow = (int)(Math.random() * grid.length);
+	  int randomTelCol = (int)(Math.random() * grid[0].length);
 	  
 	  //Sand
 	  if(grid[randomRow][randomCol] == SAND && (grid[randomRow + 1][randomCol] == EMPTY || grid[randomRow + 1][randomCol] == WATER))
@@ -319,9 +321,10 @@ public class SandLab
 	  }
 	  
 	  //Teleport
-	  if(grid[randomRow][randomCol] == VINE && randomCol - 1 >= 0 && randomRow - 1 >= 0)
+	  if(grid[randomRow][randomCol] == TELEPORT && randomCol - 1 >= 0 && randomRow - 1 >= 0)
 	  {
-		  
+		  grid[randomTelRow][randomTelCol] = TELEPORT;
+		  grid[randomRow][randomCol] = EMPTY;
 	  }
   }
   
