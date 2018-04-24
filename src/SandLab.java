@@ -50,6 +50,14 @@ public class SandLab
     hitEdge = new boolean[numCols];
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
+    
+//    for(int row = 0; row < numRows; row++)
+//    {
+//    		for(int col = 0; col < numCols; col++)
+//    		{
+//    			grid[row][col] = VINE;
+//    		}
+//    }
   }
   
   //called when the user clicks on a location using the given tool
@@ -152,17 +160,17 @@ public class SandLab
 	  {
 		  if(randomDirection == 1 && grid[randomRow + 1][randomCol] == EMPTY)
 		  {
-			  grid[randomRow + 1][randomCol] = grid[randomRow][randomCol];
+			  grid[randomRow + 1][randomCol] = WATER;
 			  grid[randomRow][randomCol] = 0;
 		  }
 		  else if(randomDirection == 2 && grid[randomRow][randomCol - 1] == EMPTY)
 		  {
-			  grid[randomRow][randomCol - 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol - 1] = WATER;
 			  grid[randomRow][randomCol] = 0;
 		  }
 		  else if(grid[randomRow][randomCol + 1] == EMPTY)
 		  {
-			  grid[randomRow][randomCol + 1] = grid[randomRow][randomCol];
+			  grid[randomRow][randomCol + 1] = WATER;
 			  grid[randomRow][randomCol] = 0;
 		  }
 	  }
@@ -320,17 +328,68 @@ public class SandLab
 			  grid[randomRow][randomCol - 1] = EMPTY;
 			  grid[randomRow][randomCol + 1] = EMPTY;
 		  }
-		  if(grid[randomRow + 1][randomCol] == HELIUM)
+		  if(grid[randomRow + 1][randomCol] == HELIUM && randomRow - 2 >= 0 && randomCol - 2 >= 0 && randomRow + 2 < grid[0].length && randomCol + 2 < grid.length)
 		  {
-			  grid[randomRow + 1][randomCol] = FIRE;
+			//Explosion
+			  grid[randomRow - 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol + 2] = FIRE;
+			  grid[randomRow + 2][randomCol - 2] = FIRE;
+			  grid[randomRow - 2][randomCol + 2] = FIRE;
+			  grid[randomRow - 2][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol + 2] = FIRE;
+			  //Clear Explosion
+			  grid[randomRow - 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol + 1] = EMPTY;
+			  grid[randomRow + 1][randomCol - 1] = EMPTY;
+			  grid[randomRow - 1][randomCol + 1] = EMPTY;
+			  grid[randomRow - 1][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol + 1] = EMPTY;
 		  }
-		  if(grid[randomRow][randomCol - 1] == HELIUM)
+		  if(grid[randomRow][randomCol - 1] == HELIUM && randomRow - 2 >= 0 && randomCol - 2 >= 0 && randomRow + 2 < grid[0].length && randomCol + 2 < grid.length)
 		  {
-			  grid[randomRow][randomCol - 1] = FIRE;
+			//Explosion
+			  grid[randomRow - 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol + 2] = FIRE;
+			  grid[randomRow + 2][randomCol - 2] = FIRE;
+			  grid[randomRow - 2][randomCol + 2] = FIRE;
+			  grid[randomRow - 2][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol + 2] = FIRE;
+			  //Clear Explosion
+			  grid[randomRow - 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol + 1] = EMPTY;
+			  grid[randomRow + 1][randomCol - 1] = EMPTY;
+			  grid[randomRow - 1][randomCol + 1] = EMPTY;
+			  grid[randomRow - 1][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol + 1] = EMPTY;
 		  }
-		  if(grid[randomRow][randomCol + 1] == HELIUM)
+		  if(grid[randomRow][randomCol + 1] == HELIUM && randomRow - 2 >= 0 && randomCol - 2 >= 0 && randomRow + 2 < grid[0].length && randomCol + 2 < grid.length)
 		  {
-			  grid[randomRow][randomCol + 1] = FIRE;
+			//Explosion
+			  grid[randomRow - 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol] = FIRE;
+			  grid[randomRow + 2][randomCol + 2] = FIRE;
+			  grid[randomRow + 2][randomCol - 2] = FIRE;
+			  grid[randomRow - 2][randomCol + 2] = FIRE;
+			  grid[randomRow - 2][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol - 2] = FIRE;
+			  grid[randomRow][randomCol + 2] = FIRE;
+			  //Clear Explosion
+			  grid[randomRow - 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol] = EMPTY;
+			  grid[randomRow + 1][randomCol + 1] = EMPTY;
+			  grid[randomRow + 1][randomCol - 1] = EMPTY;
+			  grid[randomRow - 1][randomCol + 1] = EMPTY;
+			  grid[randomRow - 1][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol - 1] = EMPTY;
+			  grid[randomRow][randomCol + 1] = EMPTY;
 		  }
 	  }
 	  
