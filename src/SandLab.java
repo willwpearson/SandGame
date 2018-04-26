@@ -51,13 +51,20 @@ public class SandLab
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
     
-    for(int row = 0; row < numRows; row++)
-    {
-    		for(int col = 0; col < numCols; col++)
-    		{
-    			grid[row][col] = HELIUM;
-    		}
-    }
+//    for(int row = 0; row < numRows / 2; row++)
+//    {
+//    		for(int col = 0; col < numCols; col++)
+//    		{
+//    			grid[row][col] = VINE;
+//    		}
+//    }
+//    for(int row = numRows - 1; row >= numRows / 2; row--)
+//    {
+//    		for(int col = 0; col < numCols; col++)
+//    		{
+//    			grid[row][col] = HELIUM;
+//    		}
+//    }
   }
   
   //called when the user clicks on a location using the given tool
