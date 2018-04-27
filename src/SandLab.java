@@ -15,10 +15,12 @@ public class SandLab
   public static final int FIRE = 7;
   public static final int VINE = 8;
   public static final int TELEPORT = 9;
+  public static final int LASER = 10;
   
   //do not add any more fields below
   private int[][] grid;
   private boolean[] hitEdge;
+  private int randomDirectionLaser;
   private SandDisplay display;
   
   
@@ -32,7 +34,7 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[10];
+    names = new String[11];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
@@ -44,18 +46,20 @@ public class SandLab
     names[FIRE] = "Fire";
     names[VINE] = "Vine";
     names[TELEPORT] = "Teleport";
+    names[LASER] = "Laser";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
     hitEdge = new boolean[numCols];
+    randomDirectionLaser = (int)(Math.random() * 4);
     
     display = new SandDisplay("Falling Sand", numRows, numCols, names);
     
-//    for(int row = 0; row < numRows / 2; row++)
+//    for(int row = 0; row < numRows; row++)
 //    {
 //    		for(int col = 0; col < numCols; col++)
 //    		{
-//    			grid[row][col] = VINE;
+//    			grid[row][col] = BOUNCE;
 //    		}
 //    }
 //    for(int row = numRows - 1; row >= numRows / 2; row--)
@@ -123,6 +127,10 @@ public class SandLab
 			  else if(grid[row][col] == TELEPORT)
 			  {
 				  color = new Color(255, 255, 0);
+			  }
+			  else if(grid[row][col] == LASER)
+			  {
+				  color = new Color(245, 50, 41);
 			  }
 			  display.setColor(row, col, color);
 		  }
@@ -426,6 +434,59 @@ public class SandLab
 	  {
 		  grid[randomTelRow][randomTelCol] = TELEPORT;
 		  grid[randomRow][randomCol] = EMPTY;
+	  }
+	  
+	  //Laser
+	  if(grid[randomRow][randomCol] == LASER && randomCol - 1 >= 0 && randomRow - 1 >= 0)
+	  {
+		  if(randomDirectionLaser == 1 && randomRow - 4 >= 0)
+		  {
+			  grid[randomRow + 1][randomCol] = LASER;
+			  grid[randomRow - 4][randomCol] = EMPTY;
+			  if(randomRow + 1 == grid.length - 1)
+			  {
+				  grid[randomRow][randomCol] = EMPTY;
+				  grid[randomRow - 1][randomCol] = EMPTY;
+				  grid[randomRow - 2][randomCol] = EMPTY;
+				  grid[randomRow - 3][randomCol] = EMPTY;
+			  }
+		  }
+		  else if(randomDirectionLaser == 2)
+		  {
+			  grid[randomRow - 1][randomCol] = LASER;
+			  grid[randomRow + 4][randomCol] = EMPTY;
+			  if(randomRow - 1 == 0)
+			  {
+				  grid[randomRow][randomCol] = EMPTY;
+				  grid[randomRow + 1][randomCol] = EMPTY;
+				  grid[randomRow + 2][randomCol] = EMPTY;
+				  grid[randomRow + 3][randomCol] = EMPTY;
+			  }
+		  }
+		  else if(randomDirectionLaser == 3 && randomCol - 4 >= 0)
+		  {
+			  grid[randomRow][randomCol + 1] = LASER;
+			  grid[randomRow][randomCol - 4] = EMPTY;
+			  if(randomCol + 1 == grid[0].length - 1)
+			  {
+				  grid[randomRow][randomCol] = EMPTY;
+				  grid[randomRow][randomCol - 1] = EMPTY;
+				  grid[randomRow][randomCol - 2] = EMPTY;
+				  grid[randomRow][randomCol - 3] = EMPTY;
+			  }
+		  }
+		  else
+		  {
+			  grid[randomRow][randomCol - 1] = LASER;
+			  grid[randomRow][randomCol + 4] = EMPTY;
+			  if(randomCol - 1 == 0)
+			  {
+				  grid[randomRow][randomCol] = EMPTY;
+				  grid[randomRow][randomCol + 1] = EMPTY;
+				  grid[randomRow][randomCol + 2] = EMPTY;
+				  grid[randomRow][randomCol + 3] = EMPTY;
+			  }
+		  }
 	  }
   }
   
